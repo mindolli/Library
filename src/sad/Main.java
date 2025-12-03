@@ -1,11 +1,7 @@
 package sad;
 
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.Scanner;
-import java.io.*;
-import java.nio.file.*;
-import java.util.List;
 
 public class Main {
 
@@ -31,7 +27,7 @@ public class Main {
                 db.addBooksToFile(bookList);
                 break;
             case 2: // 도서 삭제
-                delete deleter = new delete();
+                Delete deleter = new Delete();
                 deleter.deleteByTitle(bookList);
                 break;
             case 3: // 전체 도서 목록 출력
@@ -45,7 +41,7 @@ public class Main {
 
                 break;
             case 4: // 제목으로 검색
-                search searcher = new search();
+                Search searcher = new Search();
                 searcher.searchByTitle(bookList);
                 break;
             case 5: // 장르 검색

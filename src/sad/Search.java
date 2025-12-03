@@ -2,7 +2,7 @@ package sad;
 
 import java.util.Scanner;
 
-public class search {
+public class Search {
     public void searchByTitle(java.util.ArrayList<Book> bookList) {
         Scanner scan = new Scanner(System.in);
         System.out.println("검색할 제목을 입력하세요:");

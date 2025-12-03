@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class Genre {
 
     public void searchByGenre(ArrayList<Book> bookList) {
-        Scanner scan = new Scanner(System.in);
+        Scanner scan = Main.scan;
         KDC selectedGenre = null;
 
         // --- 입력 루프(오타 처리 포함) ---

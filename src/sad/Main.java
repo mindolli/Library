@@ -5,8 +5,10 @@ import java.util.Scanner;
 
 public class Main {
 
+    public static final Scanner scan = new Scanner(System.in);
+
     public static void main(String[] args) {
-        Scanner scan = new Scanner(System.in);
+        // Scanner scan = new Scanner(System.in);
         ArrayList<Book> bookList = new ArrayList<>();
         Database db = new Database();
 

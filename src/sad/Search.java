@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Search {
     public void searchByTitle(java.util.ArrayList<Book> bookList) {
-        Scanner scan = new Scanner(System.in);
+        Scanner scan = Main.scan;
         System.out.println("검색할 제목을 입력하세요:");
         String keyword = scan.nextLine();
 
@@ -20,6 +20,7 @@ public class Search {
             System.out.println("검색 결과가 없습니다.");
         }
     }
+
     public void searchByGenre(java.util.ArrayList<Book> bookList) {
 
     }

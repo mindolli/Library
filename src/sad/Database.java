@@ -11,7 +11,7 @@ public class Database {
     private static final String FILE_PATH = "books.txt";
 
     public static void addBooksToFile(ArrayList<Book> bookList) {
-        Scanner scan = new Scanner(System.in);
+        Scanner scan = Main.scan;
         // ArrayList<Book> bookList = new ArrayList<>();
 
         boolean contiueProgram = true;
@@ -287,5 +287,9 @@ public class Database {
             System.out.println(b);
         }
         System.out.println("===========================");
+    }
+
+    public static void deleteBooksFromFile(ArrayList<Book> bookList) {
+
     }
 }

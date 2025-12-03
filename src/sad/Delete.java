@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Delete {
     public void deleteByTitle(java.util.ArrayList<Book> bookList) {
-        Scanner sc = new Scanner(System.in);
+        Scanner sc = Main.scan;
         System.out.println("삭제할 도서의 제목을 입력하세요:");
         String keyword = sc.nextLine();
 

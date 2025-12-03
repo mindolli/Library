@@ -13,10 +13,9 @@ public class Database {
 
     public static void addBooksToFile(ArrayList<Book> bookList) {
         Scanner scan = Main.scan;
-        // ArrayList<Book> bookList = new ArrayList<>();
 
-        boolean contiueProgram = true;
-        while (contiueProgram) {
+        boolean continueProgram = true;
+        while (continueProgram) {
             String title = null;
             String author = null;
             String publisher = null;
@@ -44,7 +43,7 @@ public class Database {
                         scan.nextLine();
                     }
                 }
-                if (Check == true) {
+                if (Check) {
                     Test = true;
                 } else {
                     System.out.println("다시 입력하겠습니다.");
@@ -68,7 +67,7 @@ public class Database {
                         scan.nextLine();
                     }
                 }
-                if (Check == true) {
+                if (Check) {
                     Test = true;
                 } else {
                     System.out.println("다시 입력하겠습니다.");
@@ -92,7 +91,7 @@ public class Database {
                         scan.nextLine();
                     }
                 }
-                if (Check == true) {
+                if (Check) {
                     Test = true;
                 } else {
                     System.out.println("다시 입력하겠습니다.");
@@ -125,9 +124,9 @@ public class Database {
                         scan.nextLine();
                     }
                 }
-                if (Check == true) {
+                if (Check) {
                     Test = true;
-                } else if (Check == false) {
+                } else {
                     System.out.println("다시 입력하겠습니다.");
                     Test1 = false;
                 }
@@ -165,7 +164,7 @@ public class Database {
                         scan.nextLine();
                     }
                 }
-                if (Check == true) {
+                if (Check) {
                     Test = true;
                 } else {
                     System.out.println("다시 입력하겠습니다.");
@@ -207,7 +206,7 @@ public class Database {
                         scan.nextLine();
                     }
                 }
-                if (Check == true) {
+                if (Check) {
                     Test = true;
                 } else {
                     System.out.println("다시 입력하겠습니다.");
@@ -242,7 +241,7 @@ public class Database {
                         scan.nextLine();
                     }
                 }
-                if (Check == true) {
+                if (Check) {
                     Test = true;
                 } else {
                     System.out.println("다시 입력하겠습니다.");
@@ -268,15 +267,12 @@ public class Database {
                         scan.nextLine();
                     }
                 }
-                if (Check == true) {
+                if (Check) {
                     Test = true;
                 } else {
                     System.out.println("다시 입력하겠습니다.");
                 }
             }
-            Test = false;
-            Check = false;
-            Test1 = false;
             Book book = new Book(title, author, publisher, seriserNumber, difficultyLevel, genre, isBorrowable,
                     bookType);
             System.out.println(book);
@@ -287,7 +283,7 @@ public class Database {
             while (!validChoice) {
                 try {
                     System.out.println("다른 도서를 추가로 입력하시겠습니까? (true: 계속, false: 종료)");
-                    contiueProgram = scan.nextBoolean();
+                    continueProgram = scan.nextBoolean();
                     scan.nextLine();
                     validChoice = true;
                 } catch (InputMismatchException e) {
@@ -299,18 +295,9 @@ public class Database {
 
         System.out.println("\n=====================================");
         System.out.println("저장된 모든 도서 (총 " + bookList.size() + "권)");
-        // System.out.println("=====================================");
-        // for (int i = 0; i < bookList.size(); i++) {
-        // System.out.println((i + 1) + ". " + bookList.get(i));
-        // }
-        // System.out.println("=====================================");
-
         saveBooksToFile(bookList);
         System.out.println("도서 목록이 books.txt 파일에 저장되었습니다!");
         System.out.println("프로그램을 종료합니다.");
-
-        // scan.close();
-
     }
 
     public static void loadBooksFromFile(ArrayList<Book> bookList) {
@@ -351,7 +338,7 @@ public class Database {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH));
             int changeCount = bookList.size() - initialBookCount;
-            String changeMsg = "";
+            String changeMsg;
             if (changeCount > 0) {
                 changeMsg = changeCount + "권이 추가되었습니다.";
             } else if (changeCount < 0) {

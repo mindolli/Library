@@ -29,8 +29,7 @@ public class Main {
                 db.addBooksToFile(bookList);
                 break;
             case 2: // 도서 삭제
-                Delete deleter = new Delete();
-                deleter.deleteByTitle(bookList);
+                db.deleteBooksFromFile(bookList);
                 break;
             case 3: // 전체 도서 목록 출력
                 if (bookList.isEmpty()) {

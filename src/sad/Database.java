@@ -290,6 +290,44 @@ public class Database {
     }
 
     public static void deleteBooksFromFile(ArrayList<Book> bookList) {
+        Scanner scan = Main.scan;
+        System.out.println("삭제할 도서의 제목을 입력하세요:");
+        String keyword = scan.nextLine();
 
+        ArrayList<Book> searchResults = new ArrayList<>();
+        ArrayList<Integer> originalIndices = new ArrayList<>();
+
+        int index = 0;
+        for (int i = 0; i < bookList.size(); i++) {
+            Book book = bookList.get(i);
+            if (book.title.contains(keyword)) {
+                searchResults.add(book);
+                originalIndices.add(i);
+                System.out.println((index + 1) + ". " + book);
+                index++;
+            }
+        }
+
+        if (searchResults.isEmpty()) {
+            System.out.println("검색 결과가 없습니다.");
+            return;
+        }
+
+        System.out.println("삭제할 도서의 번호를 입력하세요 (취소: 0):");
+        int selection = scan.nextInt();
+        scan.nextLine(); // Consume newline
+
+        if (selection > 0 && selection <= searchResults.size()) {
+            int originalIndex = originalIndices.get(selection - 1);
+            Book deletedBook = bookList.remove(originalIndex);
+            System.out.println("'" + deletedBook.title + "' 도서가 삭제되었습니다.");
+            saveBooksToFile(bookList);
+            System.out.println("도서 목록이 books.txt 파일에 저장되었습니다!");
+            System.out.println("프로그램을 종료합니다.");
+        } else if (selection == 0) {
+            System.out.println("삭제를 취소합니다.");
+        } else {
+            System.out.println("잘못된 번호입니다.");
+        }
     }
 }

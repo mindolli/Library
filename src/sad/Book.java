@@ -6,20 +6,20 @@ public class Book {
     String author;
     String publisher;
     int seriesNumber;
-    String difficulty;
+    DifficultyLevel difficultyLevel;
     KDC genre;
     boolean isBorrowable;
     String bookType;
 
     // 메서드
     // 생성자
-    public Book(String title, String author, String publisher, int seriesNumber, String difficulty, KDC genre,
-            boolean isBorrowable, String bookType) {
+    public Book(String title, String author, String publisher, int seriesNumber, DifficultyLevel difficultyLevel, KDC genre,
+                boolean isBorrowable, String bookType) {
         this.title = title;
         this.author = author;
         this.publisher = publisher;
         this.seriesNumber = seriesNumber;
-        this.difficulty = difficulty;
+        this.difficultyLevel = difficultyLevel;
         this.genre = genre;
         this.isBorrowable = isBorrowable;
         this.bookType = bookType;
@@ -32,7 +32,7 @@ public class Book {
                 ", 저자: " + author +
                 ", 출판사: " + publisher +
                 ", 권수: " + seriesNumber +
-                ", 난이도: " + difficulty +
+                ", 난이도: " + difficultyLevel +
                 ", 장르: " + genre +
                 ", 대출 가능: " + isBorrowable +
                 ", 책 종류: " + bookType;

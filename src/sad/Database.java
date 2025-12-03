@@ -20,7 +20,7 @@ public class Database {
             String author = null;
             String publisher = null;
             int seriserNumber = 0;
-            String difficulty = null;
+            DifficultyLevel difficultyLevel = null;
             KDC genre = null;
             boolean isBorrowable = false;
             String bookType = null;
@@ -136,15 +136,29 @@ public class Database {
             Test1 = false;
             Test2 = false;
             while (!Test) {
-                System.out.println("난이도를 입력하세요.(상, 중상, 중, 중하, 하)");
-                difficulty = scan.nextLine();
-                Test1 = false;
                 while (!Test1) {
                     try {
-                        System.out.println("난이도가 " + difficulty + " (이)가 맞나요? true 혹은 false를 입력해주세요");
+                        System.out.println("난이도를 숫자로 입력하세요. 5:상, 4:중상, 3:중, 2:중하, 1:하");
+                        int diffCode = scan.nextInt();
+                        scan.nextLine();
+                        difficultyLevel = DifficultyLevel.fromCode(diffCode);
+                        if (difficultyLevel != null) {
+                            Test1 = true;
+                        } else {
+                            System.out.println("1~5 사이의 숫자를 입력해주세요.");
+                        }
+                    } catch (InputMismatchException e) {
+                        System.out.println("숫자만 입력해주세요.");
+                        scan.nextLine();
+                    }
+                }
+                while (!Test2) {
+                    try {
+                        System.out.println("난이도가 " + difficultyLevel.name() + "(" + difficultyLevel.getCode()
+                                + ") (이)가 맞나요? true 혹은 false를 입력해주세요");
                         Check = scan.nextBoolean();
                         scan.nextLine();
-                        Test1 = true;
+                        Test2 = true;
                     } catch (InputMismatchException e) {
                         System.out.println("true 혹은 false를 입력해주셔야 합니다.");
                         scan.nextLine();
@@ -154,6 +168,7 @@ public class Database {
                     Test = true;
                 } else {
                     System.out.println("다시 입력하겠습니다.");
+                    Test1 = false;
                 }
             }
             Test = false;
@@ -198,7 +213,67 @@ public class Database {
                     Test1 = false;
                 }
             }
-            Book book = new Book(title, author, publisher, seriserNumber, difficulty, genre, isBorrowable, bookType);
+            Test = false;
+            Check = false;
+            Test1 = false;
+            Test2 = false;
+            while(!Test) {
+                while(!Test1) {
+                    try{System.out.println("대출가능 여부를 입력하세요.");
+                        isBorrowable = scan.nextBoolean();
+                        scan.nextLine();
+                        Test1 = true;
+                        Test2 = false;
+                    }catch (InputMismatchException e) {
+                        System.out.println("잘못된 입력입니다. true or false를 입력해주세요.");
+                        scan.nextLine();
+                    }
+                }
+                while(!Test2) {
+                    try{System.out.println("대출가능 여부가 " + isBorrowable + "가 맞나요? true 혹은 false를 입력해주세요");
+                        Check = scan.nextBoolean();
+                        scan.nextLine();
+                        Test2 = true;
+                    }catch(InputMismatchException e1) {
+                        System.out.println("true 혹은 false를 입력해주셔야 합니다.");
+                        scan.nextLine();
+                    }
+                }
+                if(Check == true) {
+                    Test = true;
+                }else {
+                    System.out.println("다시 입력하겠습니다.");
+                    Test1 = false;
+                }
+            }
+            Test = false;
+            Check = false;
+            Test1 = false;
+            Test2 = false;
+            while(!Test) {
+                System.out.println("책 종류를 입력하세요.");
+                bookType = scan.nextLine();
+                Test1 = false;
+                while(!Test1) {
+                    try{System.out.println("책의 종류가 " + bookType + "(이)가 맞나요? true 혹은 false를 입력해주세요");
+                        Check = scan.nextBoolean();
+                        scan.nextLine();
+                        Test1 = true;
+                    }catch(InputMismatchException e) {
+                        System.out.println("true 혹은 false를 입력해주셔야 합니다.");
+                        scan.nextLine();
+                    }
+                }
+                if(Check == true) {
+                    Test = true;
+                }else {
+                    System.out.println("다시 입력하겠습니다.");
+                }
+            }
+            Test = false;
+            Check = false;
+            Test1 = false;
+            Book book = new Book(title, author, publisher, seriserNumber, difficultyLevel, genre, isBorrowable, bookType);
             System.out.println(book);
             bookList.add(book);
             System.out.println("\n도서가 저장되었습니다!");
@@ -219,11 +294,11 @@ public class Database {
 
         System.out.println("\n=====================================");
         System.out.println("저장된 모든 도서 (총 " + bookList.size() + "권)");
-        System.out.println("=====================================");
-        for (int i = 0; i < bookList.size(); i++) {
-            System.out.println((i + 1) + ". " + bookList.get(i));
-        }
-        System.out.println("=====================================");
+//        System.out.println("=====================================");
+//        for (int i = 0; i < bookList.size(); i++) {
+//            System.out.println((i + 1) + ". " + bookList.get(i));
+//        }
+//        System.out.println("=====================================");
 
         saveBooksToFile(bookList);
         System.out.println("도서 목록이 books.txt 파일에 저장되었습니다!");
@@ -248,15 +323,16 @@ public class Database {
                     String author = parts[1];
                     String publisher = parts[2];
                     int seriesNumber = Integer.parseInt(parts[3]);
-                    String difficulty = parts[4];
+                    int diffCode = Integer.parseInt(parts[4]);
+                    DifficultyLevel diffEnum = DifficultyLevel.fromCode(diffCode);
                     int genreCode = Integer.parseInt(parts[5]);
                     KDC genreEnum = KDC.fromCode(genreCode);
-                    boolean isBorrowable = Boolean.parseBoolean(parts[6]);
-                    String bookType = parts[7];
+                    boolean isBorrowableVal = Boolean.parseBoolean(parts[6]);
+                    String bookTypeVal = parts[7];
 
-                    Book book = new Book(title, author, publisher, seriesNumber,
-                            difficulty, genreEnum, isBorrowable, bookType);
-                    bookList.add(book);
+                    Book bookObj = new Book(title, author, publisher, seriesNumber,
+                            diffEnum, genreEnum, isBorrowableVal, bookTypeVal);
+                    bookList.add(bookObj);
                 }
             }
         } catch (IOException e) {
@@ -272,7 +348,7 @@ public class Database {
             for (Book book : bookList) {
                 String line = book.title + "|" + book.author + "|" +
                         book.publisher + "|" + book.seriesNumber + "|" +
-                        book.difficulty + "|" + book.genre.getCode() + "|" + // Changed to getCode()
+                        book.difficultyLevel.getCode() + "|" + book.genre.getCode() + "|" +
                         book.isBorrowable + "|" + book.bookType;
                 writer.write(line);
                 writer.newLine();

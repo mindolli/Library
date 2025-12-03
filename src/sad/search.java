@@ -20,4 +20,7 @@ public class search {
             System.out.println("검색 결과가 없습니다.");
         }
     }
+    public void searchByGenre(java.util.ArrayList<Book> bookList) {
+
+    }
 }

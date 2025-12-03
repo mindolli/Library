@@ -4,17 +4,15 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.io.*;
-        import java.nio.file.*;
-        import java.util.List;
+import java.nio.file.*;
+import java.util.List;
 
 public class Database {
     private static final String FILE_PATH = "books.txt";
 
     public static void addBooksToFile(ArrayList<Book> bookList) {
         Scanner scan = new Scanner(System.in);
-//        ArrayList<Book> bookList = new ArrayList<>();
-
-
+        // ArrayList<Book> bookList = new ArrayList<>();
 
         boolean contiueProgram = true;
         while (contiueProgram) {
@@ -23,7 +21,7 @@ public class Database {
             String publisher = null;
             int seriserNumber = 0;
             String difficulty = null;
-            int genre = 0;
+            KDC genre = null;
             boolean isBorrowable = false;
             String bookType = null;
             boolean Check = false;
@@ -161,14 +159,21 @@ public class Database {
             Test = false;
             Check = false;
             Test1 = false;
+
             while (!Test) {
                 while (!Test1) {
                     try {
-                        System.out.println("장르 숫자로 입력하세요. 총류(0), 철학(1), 종교(2), 사회과학(3), 자연과학(4), 기술과학(5), 예술(6), 언어(7), 문학(8), 역사(9)");
-                        genre = scan.nextInt();
+                        System.out.println(
+                                "장르 숫자로 입력하세요. 총류(0), 철학(1), 종교(2), 사회과학(3), 자연과학(4), 기술과학(5), 예술(6), 언어(7), 문학(8), 역사(9)");
+                        int genreCode = scan.nextInt();
                         scan.nextLine();
-                        Test1 = true;
-                        Test2 = false;
+                        genre = KDC.fromCode(genreCode);
+                        if (genre != null) {
+                            Test1 = true;
+                            Test2 = false;
+                        } else {
+                            System.out.println("잘못된 장르 번호입니다. 0~9 사이의 숫자를 입력해주세요.");
+                        }
                     } catch (InputMismatchException e) {
                         System.out.println("잘못된 입력입니다. 숫자를 입력해주세요.");
                         scan.nextLine();
@@ -176,7 +181,8 @@ public class Database {
                 }
                 while (!Test2) {
                     try {
-                        System.out.println("장르가 KDC기준 " + genre + "번이 맞나요? true 혹은 false를 입력해주세요");
+                        System.out.println(
+                                "장르가 KDC기준 " + genre.name() + "(" + genre.getCode() + ")번이 맞나요? true 혹은 false를 입력해주세요");
                         Check = scan.nextBoolean();
                         scan.nextLine();
                         Test2 = true;
@@ -192,74 +198,10 @@ public class Database {
                     Test1 = false;
                 }
             }
-            Test = false;
-            Check = false;
-            Test1 = false;
-            Test2 = false;
-            while (!Test) {
-                while (!Test1) {
-                    try {
-                        System.out.println("대출가능 여부를 입력하세요.");
-                        isBorrowable = scan.nextBoolean();
-                        scan.nextLine();
-                        Test1 = true;
-                        Test2 = false;
-                    } catch (InputMismatchException e) {
-                        System.out.println("잘못된 입력입니다. true or false를 입력해주세요.");
-                        scan.nextLine();
-                    }
-                }
-                while (!Test2) {
-                    try {
-                        System.out.println("대출가능 여부가 " + isBorrowable + "가 맞나요? true 혹은 false를 입력해주세요");
-                        Check = scan.nextBoolean();
-                        scan.nextLine();
-                        Test2 = true;
-                    } catch (InputMismatchException e1) {
-                        System.out.println("true 혹은 false를 입력해주셔야 합니다.");
-                        scan.nextLine();
-                    }
-                }
-                if (Check == true) {
-                    Test = true;
-                } else {
-                    System.out.println("다시 입력하겠습니다.");
-                    Test1 = false;
-                }
-            }
-            Test = false;
-            Check = false;
-            Test1 = false;
-            Test2 = false;
-            while (!Test) {
-                System.out.println("책 종류를 입력하세요.");
-                bookType = scan.nextLine();
-                Test1 = false;
-                while (!Test1) {
-                    try {
-                        System.out.println("책의 종류가 " + bookType + "(이)가 맞나요? true 혹은 false를 입력해주세요");
-                        Check = scan.nextBoolean();
-                        scan.nextLine();
-                        Test1 = true;
-                    } catch (InputMismatchException e) {
-                        System.out.println("true 혹은 false를 입력해주셔야 합니다.");
-                        scan.nextLine();
-                    }
-                }
-                if (Check == true) {
-                    Test = true;
-                } else {
-                    System.out.println("다시 입력하겠습니다.");
-                }
-            }
-            Test = false;
-            Check = false;
-            Test1 = false;
             Book book = new Book(title, author, publisher, seriserNumber, difficulty, genre, isBorrowable, bookType);
             System.out.println(book);
             bookList.add(book);
             System.out.println("\n도서가 저장되었습니다!");
-            System.out.println(book);
             System.out.println("\n현재까지 저장된 도서 수: " + bookList.size() + "권\n");
             boolean validChoice = false;
             while (!validChoice) {
@@ -287,7 +229,7 @@ public class Database {
         System.out.println("도서 목록이 books.txt 파일에 저장되었습니다!");
         System.out.println("프로그램을 종료합니다.");
 
-//        scan.close();
+        // scan.close();
 
     }
 
@@ -307,12 +249,13 @@ public class Database {
                     String publisher = parts[2];
                     int seriesNumber = Integer.parseInt(parts[3]);
                     String difficulty = parts[4];
-                    int genre = Integer.parseInt(parts[5]);
+                    int genreCode = Integer.parseInt(parts[5]);
+                    KDC genreEnum = KDC.fromCode(genreCode);
                     boolean isBorrowable = Boolean.parseBoolean(parts[6]);
                     String bookType = parts[7];
 
                     Book book = new Book(title, author, publisher, seriesNumber,
-                            difficulty, genre, isBorrowable, bookType);
+                            difficulty, genreEnum, isBorrowable, bookType);
                     bookList.add(book);
                 }
             }
@@ -325,23 +268,20 @@ public class Database {
     public static void saveBooksToFile(ArrayList<Book> bookList) {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH));
-            System.out.println("파일 저장 중... 저장할 도서 수: " + bookList.size());  // ← 추가
+            System.out.println("파일 저장 중... 저장할 도서 수: " + bookList.size());
             for (Book book : bookList) {
                 String line = book.title + "|" + book.author + "|" +
                         book.publisher + "|" + book.seriesNumber + "|" +
-                        book.difficulty + "|" + book.genre + "|" +
+                        book.difficulty + "|" + book.genre.getCode() + "|" + // Changed to getCode()
                         book.isBorrowable + "|" + book.bookType;
                 writer.write(line);
                 writer.newLine();
             }
             writer.close();
-            System.out.println("파일 저장 완료! 위치: " + new File(FILE_PATH).getAbsolutePath());  // ← 추가
+            System.out.println("파일 저장 완료! 위치: " + new File(FILE_PATH).getAbsolutePath());
         } catch (IOException e) {
             System.out.println("파일 저장 오류: " + e.getMessage());
         }
-
-
-        // 불러오기
         System.out.println("===== 저장된 도서 목록 =====");
         for (Book b : bookList) {
             System.out.println(b);

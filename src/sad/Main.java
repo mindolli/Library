@@ -5,10 +5,9 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static final Scanner scan = new Scanner(System.in);
+    public static final Scanner scan = new Scanner(System.in); // final: 변경할 수 없음을 의미 - 오버라이딩 금지
 
     public static void main(String[] args) {
-        // Scanner scan = new Scanner(System.in);
         ArrayList<Book> bookList = new ArrayList<>();
         Database db = new Database();
 
@@ -39,14 +38,13 @@ public class Main {
                         System.out.println(book);
                     }
                 }
-
                 break;
             case 4: // 제목으로 검색
-                Search searcher = new Search();
-                searcher.searchByTitle(bookList);
+                Search titleSearcher = new Search();
+                titleSearcher.searchByTitle(bookList);
                 break;
             case 5: // 장르 검색
-                Genre genreSearcher = new Genre();
+                Search genreSearcher = new Search();
                 genreSearcher.searchByGenre(bookList);
                 break;
             case 6:
@@ -58,29 +56,4 @@ public class Main {
                 System.out.println("잘못된 입력입니다.");
         }
     }
-
-    // System.out.println("제목을 입력하세요.");
-    // String title = scan.nextLine();
-    // System.out.println("저자를 입력하세요.");
-    // String author = scan.nextLine();
-    // System.out.println("출판사를 입력하세요.");
-    // String publisher = scan.nextLine();
-    // System.out.println("시리즈의 권수를 입력하세요.");
-    // int seriserNumber = scan.nextInt();
-    // scan.nextLine();
-    // System.out.println("난이도를 입력하세요.");
-    // String difficulty = scan.nextLine();
-    // System.out.println("장르를 입력하세요.");
-    // int genre = scan.nextInt();
-    // scan.nextLine();
-    // System.out.println("대출가능 여부를 입력하세요.");
-    // boolean isBorrowable = scan.nextBoolean();
-    // scan.nextLine();
-    // System.out.println("책 종류를 입력하세요.");
-    // String bookType = scan.nextLine();
-    // Book book = new Book(title , author, publisher, seriserNumber, difficulty,
-    // genre, isBorrowable,bookType) ;
-    // System.out.println(book);
-    // bookList.add(book);
-
 }

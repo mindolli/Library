@@ -9,36 +9,18 @@ import java.util.List;
 
 public class Main {
 
+
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
         ArrayList<Book> bookList = new ArrayList<>();
-//
-//        System.out.print("제목을 입력하세요.");
-//        String title = sc.nextLine();
-//        System.out.print("저자를 입력하세요.");
-//        String author = sc.nextLine();
-//        System.out.print("출판사를 입력하세요.");
-//        String publisher = sc.nextLine();
-//        System.out.print("시리즈의 권수를 입력하세요.");
-//        int seriserNumber = sc.nextInt();
-//        sc.nextLine();
-//        System.out.print("난이도를 입력하세요.");
-//        String difficulty = sc.nextLine();
-//        System.out.print("장르를 입력하세요.");
-//        int genre = sc.nextInt();
-//        sc.nextLine();
-//        System.out.print("대출가능 여부를 입력하세요.");
-//        boolean isBorrowable = sc.nextBoolean();
-//        sc.nextLine();
-//        System.out.print("책 종류를 입력하세요.");
-//        String bookType = sc.nextLine();
-//        Book book = new Book(title, author, publisher, seriserNumber, difficulty, genre, isBorrowable, bookType);
-        Book book1 = new Book("title", "author", "publisher", 1, "1", 1, true, "bookType");
-        Book book2 = new Book("title", "author", "publisher", 2, "1", 1, true, "bookType");
-        System.out.println(book1);
-        bookList.add(book1);
-        System.out.println(book2);
-        bookList.add(book2);
+        Database db = new Database();
+
+        // 기존 파일 불러오기
+        db.loadBooksFromFile(bookList);
+
+        System.out.println("=====================================");
+        System.out.println("기존에 저장된 도서 " + bookList.size() + "권을 불러왔습니다.");
+        System.out.println("=====================================\n");
 
         System.out.println("1: 도서 등록\n2: 도서 삭제\n3: 전체 도서 출력\n4: 제목 검색\n5: 장르 검색\n6: 난이도 검색");
         System.out.println("숫자를 입력해 주세요 : ");
@@ -46,15 +28,16 @@ public class Main {
         scan.nextLine();
 
         switch (choice) {
-            case 1:
-                // addBook();
+            case 1:     // 도서 등록
+                db.addBooksToFile(bookList);
                 break;
-            case 2:
+            case 2:     // 도서 샂게
                 delete deleter = new delete();
                 deleter.deleteByTitle(bookList);
                 break;
-            case 3:
-                // 전체 도서 목록 출력
+            case 3:     // 전체 도서 목록 출력
+                db.loadBooksFromFile(bookList);
+
                 break;
             case 4:
                 search searcher = new search();

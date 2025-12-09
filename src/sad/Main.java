@@ -17,6 +17,8 @@ public class Main {
         System.out.println("=====================================");
         System.out.println("기존에 저장된 도서 " + bookList.size() + "권을 불러왔습니다.");
         System.out.println("=====================================\n");
+
+        Search searcher = new Search();
         boolean contiueProgram = true;
         while(contiueProgram) {
 
@@ -42,15 +44,13 @@ public class Main {
                     }
                     break;
                 case 4: // 제목으로 검색
-                    Search titleSearcher = new Search();
-                    titleSearcher.searchByTitle(bookList);
+                    searcher.searchByTitle(bookList);
                     break;
                 case 5: // 장르 검색
-                    Search genreSearcher = new Search();
-                    genreSearcher.searchByGenre(bookList);
+                    searcher.searchByGenre(bookList);
                     break;
-                case 6:
-                    // 난이도 검색
+                case 6: // 난이도 검색
+                    searcher.searchByDifficultyLevel(bookList);
                     break;
                 case 7: // 프로그램 종료
                     contiueProgram = false;

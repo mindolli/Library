@@ -62,4 +62,41 @@ public class Search {
             System.out.println("해당 장르의 도서를 찾을 수 없습니다.");
         }
     }
+
+    public void searchByDifficultyLevel(java.util.ArrayList<Book> bookList) {
+        Scanner scan = Main.scan;
+        DifficultyLevel selectedDifficulty = null;
+        while (selectedDifficulty == null) {
+            System.out.println("검색할 난이도를 입력하세요:");
+            System.out.println("상(5), 중상(4), 중(3), 중하(2), 하(1)");
+            String input = scan.nextLine().trim();
+
+            try {
+                int number = Integer.parseInt(input); // 숫자 변환 시도
+                selectedDifficulty = DifficultyLevel.fromCode(number);
+
+                if (selectedDifficulty == null) {
+                    System.out.println("없는 장르 번호입니다. 0~9만 입력 가능합니다.\n");
+                }
+
+            } catch (NumberFormatException e) {
+                System.out.println("숫자만 입력 가능합니다. 다시 입력하세요.\n");
+            }
+        }
+
+        // --- 검색 실행 ---
+        int count = 0;
+
+        System.out.println("\n[장르 검색 결과]");
+        for (Book book : bookList) {
+            if (book.difficultyLevel == selectedDifficulty) {
+                System.out.println(book);
+                count++;
+            }
+        }
+
+        if (count == 0) {
+            System.out.println("해당 난이도의 도서를 찾을 수 없습니다.");
+        }
+    }
 }
